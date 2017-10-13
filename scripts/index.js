@@ -17,6 +17,9 @@ var COLOR_YELLOW = "#ffff00";
 var COLOR_BLUE = "#00eeee";
 var COLOR_BLACK = "#808080";
 var COLOR_GREEN = "#009000";
+var COLOR_WHITE = "#ffffff";
+
+var colors = [COLOR_WHITE, COLOR_RED, COLOR_BLUE, COLOR_YELLOW, COLOR_BLACK];
 
 //init
 $("#seed").keyup(function() {
@@ -86,7 +89,7 @@ function createNewGame() {
 		var word = sessionData[randomNumber];
 		removeItem(sessionData, randomNumber);
 		wordsSelected.push(word);
-		trs[i % 5] += "<div class=\"word\" id=\'" + i + "\' onclick=\"clicked(\'" + i + "\')\"><div><a href=\"#\"><span class=\"ada\"></span>" + word + "</a></div></div>";
+		trs[i % 5] += "<div data-color-index=\"0\" class=\"word\" id=\'" + i + "\' onclick=\"clicked(\'" + i + "\')\"><div><a href=\"#\"><span class=\"ada\"></span>" + word + "</a></div></div>";
 	}
 	//<a href="#"><span class="ada">Washington stimulates economic growth </span>Read me</a>
 	for (var i = 0; i < trs.length; i++) {
@@ -128,27 +131,32 @@ function createNewGame() {
 }
 
 function clicked(value) {
-	if (spyMasterMode) {
-		//spymaster mode
-		document.getElementById(value).style.backgroundColor = COLOR_GREEN;
-	} else {
-		//guessers mode
-		var word = wordsSelected[value];
-		if (document.getElementById("confirm").checked) {
-			if (window.confirm("Are sure you want to select '" + word + "'?")) {
-				document.getElementById(value).style.backgroundColor = teams[value];
-				if (teams[value] == "black") {
-					document.getElementById(value).style.color = "white";
-				}
-			}
-		} else {
-			document.getElementById(value).style.backgroundColor = teams[value];
-			if (teams[value] == "black") {
-				document.getElementById(value).style.color = "white";
-			}
-		}
-	}
-	updateScore();
+	// if (spyMasterMode) {
+	// 	//spymaster mode
+	// 	document.getElementById(value).style.backgroundColor = COLOR_GREEN;
+	// } else {
+	// 	//guessers mode
+	// 	var word = wordsSelected[value];
+	// 	if (document.getElementById("confirm").checked) {
+	// 		if (window.confirm("Are sure you want to select '" + word + "'?")) {
+	// 			document.getElementById(value).style.backgroundColor = teams[value];
+	// 			if (teams[value] == "black") {
+	// 				document.getElementById(value).style.color = "white";
+	// 			}
+	// 		}
+	// 	} else {
+	// 		document.getElementById(value).style.backgroundColor = teams[value];
+	// 		if (teams[value] == "black") {
+	// 			document.getElementById(value).style.color = "white";
+	// 		}
+	// 	}
+	// }
+	// updateScore();
+	var element = document.getElementById(value);
+	var colorIndex = parseInt(element.getAttribute('data-color-index'));
+	var newIndex = (colorIndex + 1) % 5;
+	element.style.backgroundColor = colors[newIndex];
+	element.setAttribute('data-color-index', newIndex);
 }
 
 function updateScore() {
