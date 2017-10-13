@@ -89,7 +89,7 @@ function createNewGame() {
 		var word = sessionData[randomNumber];
 		removeItem(sessionData, randomNumber);
 		wordsSelected.push(word);
-		trs[i % 5] += "<div data-color-index=\"0\" class=\"word\" id=\'" + i + "\' ontouchend=\"clicked(\'" + i + "\')\" onclick=\"clicked(\'" + i + "\')\"><div><a href=\"#\"><span class=\"ada\"></span>" + word + "</a></div></div>";
+		trs[i % 5] += "<div data-color-index=\"0\" class=\"word\" id=\'" + i + "\' onclick=\"clicked(\'" + i + "\')\"><div><a href=\"#\"><span class=\"ada\"></span>" + word + "</a></div></div>";
 	}
 	//<a href="#"><span class="ada">Washington stimulates economic growth </span>Read me</a>
 	for (var i = 0; i < trs.length; i++) {
